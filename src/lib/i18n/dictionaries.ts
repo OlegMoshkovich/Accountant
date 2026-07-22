@@ -70,6 +70,12 @@ export const dictionaries = {
       colDate: "Datum",
       colAction: "Aktion",
       download: "Herunterladen",
+      preview: "Vorschau",
+      close: "Schließen",
+      loading: "Wird geladen…",
+      unsupported:
+        "Für diesen Dateityp ist keine Vorschau verfügbar. Bitte laden Sie die Datei herunter.",
+      openInNewTab: "In neuem Tab öffnen",
     },
     admin: {
       title: "Verwaltung",
@@ -189,6 +195,12 @@ export const dictionaries = {
       colDate: "Date",
       colAction: "Action",
       download: "Download",
+      preview: "Preview",
+      close: "Close",
+      loading: "Loading…",
+      unsupported:
+        "Preview is not available for this file type. Please download the file.",
+      openInNewTab: "Open in new tab",
     },
     admin: {
       title: "Administration",

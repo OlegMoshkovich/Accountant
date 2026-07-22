@@ -15,11 +15,31 @@ body {
   @apply bg-slate-50 text-slate-900 antialiased;
 }
 
-*,
-*::before,
-*::after {
+/* Square corners by default, but never flatten loaders */
+*:not(.circular-loader):not([class*="spinner"]):not([class*="Spinner"]),
+*:not(.circular-loader):not([class*="spinner"]):not([class*="Spinner"])::before,
+*:not(.circular-loader):not([class*="spinner"]):not([class*="Spinner"])::after {
   border-radius: 0 !important;
   box-shadow: none !important;
+}
+
+.circular-loader,
+.circular-loader::before,
+.circular-loader::after,
+[class*="cl-spinner"],
+[class*="cl-Spinner"],
+.cl-spinner,
+.cl-spinner::before,
+.cl-spinner::after,
+[class*="spinner"]::before,
+[class*="spinner"]::after {
+  border-radius: 9999px !important;
+}
+
+/* Clerk sometimes uses an internal ring without "spinner" in the class name */
+.cl-rootBox > div:not(.cl-cardBox):not([class*="footer"]):empty,
+.cl-rootBox > div:not(.cl-cardBox) > div:empty {
+  border-radius: 9999px !important;
 }
 
 /* Hide Clerk "Secured by" branding everywhere */

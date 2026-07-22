@@ -30,6 +30,7 @@ export default async function RootLayout({
           footerAction: "hidden",
           footerPages: "hidden",
           logoBox: "hidden",
+          spinner: "circular-loader",
           userButtonPopoverCard: "mt-3 rounded-none shadow-none",
           userButtonPopoverFooter: "hidden",
         },

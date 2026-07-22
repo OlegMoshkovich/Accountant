@@ -1,8 +1,9 @@
-import { SignIn } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { FIRM_NAME } from "@/lib/constants";
 import { getDict } from "@/lib/i18n";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { CircularLoader } from "@/components/CircularLoader";
 
 export default async function SignInPage() {
   const { locale, t } = await getDict();
@@ -14,13 +15,19 @@ export default async function SignInPage() {
         </Link>
         <LocaleSwitcher locale={locale} tone="dark" />
       </div>
-      <SignIn
-        appearance={{
-          elements: {
-            footer: "hidden",
-          },
-        }}
-      />
+      <ClerkLoading>
+        <CircularLoader />
+      </ClerkLoading>
+      <ClerkLoaded>
+        <SignIn
+          appearance={{
+            elements: {
+              footer: "hidden",
+              spinner: "circular-loader",
+            },
+          }}
+        />
+      </ClerkLoaded>
       <p className="mt-6 text-sm text-brand-100">
         {t.auth.noAccount}{" "}
         <Link href="/sign-up" className="font-semibold text-white underline">

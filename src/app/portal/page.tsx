@@ -1,6 +1,7 @@
 import { getOrCreateProfile } from "@/lib/profile";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { getDict, fill, formatDate } from "@/lib/i18n";
+import { getDict, fill } from "@/lib/i18n";
+import { DocumentsTable } from "@/components/DocumentsTable";
 
 type DocRow = {
   id: string;
@@ -11,18 +12,6 @@ type DocRow = {
   size_bytes: number | null;
   created_at: string;
 };
-
-function formatBytes(bytes: number | null): string {
-  if (!bytes) return "";
-  const units = ["B", "KB", "MB", "GB"];
-  let value = bytes;
-  let i = 0;
-  while (value >= 1024 && i < units.length - 1) {
-    value /= 1024;
-    i++;
-  }
-  return `${value.toFixed(value < 10 && i > 0 ? 1 : 0)} ${units[i]}`;
-}
 
 export default async function PortalPage() {
   const profile = await getOrCreateProfile();
@@ -39,8 +28,8 @@ export default async function PortalPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-brand-800">{t.portal.title}</h1>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl font-bold text-brand-800 sm:text-2xl">{t.portal.title}</h1>
         <p className="mt-1 text-sm text-slate-500">
           {fill(t.portal.welcome, {
             name: profile?.full_name ? `, ${profile.full_name}` : "",
@@ -49,62 +38,17 @@ export default async function PortalPage() {
       </div>
 
       {docs.length === 0 ? (
-        <div className="border border-dashed border-slate-300 bg-white p-12 text-center">
+        <div className="border border-dashed border-slate-300 bg-white p-8 text-center sm:p-12">
           <p className="text-slate-600">{t.portal.emptyTitle}</p>
           <p className="mt-1 text-sm text-slate-400">{t.portal.emptyBody}</p>
         </div>
       ) : (
-        <div className="overflow-hidden border border-slate-200 bg-white ">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-xs tracking-wide text-slate-500">
-              <tr>
-                <th className="px-5 py-3 font-medium">{t.portal.colDocument}</th>
-                <th className="px-5 py-3 font-medium">{t.portal.colCategory}</th>
-                <th className="px-5 py-3 font-medium">{t.portal.colYear}</th>
-                <th className="px-5 py-3 font-medium">{t.portal.colDate}</th>
-                <th className="px-5 py-3 text-right font-medium">
-                  {t.portal.colAction}
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {docs.map((d) => (
-                <tr key={d.id} className="hover:bg-slate-50">
-                  <td className="px-5 py-4">
-                    <div className="font-medium text-slate-800">{d.title}</div>
-                    {d.file_name && (
-                      <div className="text-xs text-slate-400">
-                        {d.file_name}
-                        {d.size_bytes ? ` · ${formatBytes(d.size_bytes)}` : ""}
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-5 py-4">
-                    <span className="inline-flex bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
-                      {t.categories[d.category] ?? d.category}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4 text-slate-600">{d.year ?? "—"}</td>
-                  <td className="px-5 py-4 text-slate-600">
-                    {formatDate(d.created_at, locale)}
-                  </td>
-                  <td className="px-5 py-4 text-right">
-                    <a
-                      href={`/api/documents/${d.id}/download`}
-                      className="inline-flex items-center gap-1.5 bg-brand-700 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-800"
-                    >
-                      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-                        <path d="M10 2a1 1 0 011 1v7.6l2.3-2.3a1 1 0 111.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 011.4-1.4L9 10.6V3a1 1 0 011-1z" />
-                        <path d="M4 15a1 1 0 011 1v1h10v-1a1 1 0 112 0v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1a1 1 0 011-1z" />
-                      </svg>
-                      {t.portal.download}
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DocumentsTable
+          docs={docs}
+          categories={t.categories}
+          labels={t.portal}
+          locale={locale}
+        />
       )}
     </div>
   );
