@@ -17,7 +17,19 @@ export default async function SignUpPage() {
       <p className="mb-6 max-w-sm text-center text-sm text-brand-100">
         {t.signUp.intro}
       </p>
-      <SignUp />
+      <SignUp
+        appearance={{
+          elements: {
+            footer: "hidden",
+          },
+        }}
+      />
+      <p className="mt-6 text-sm text-brand-100">
+        {t.auth.haveAccount}{" "}
+        <Link href="/sign-in" className="font-semibold text-white underline">
+          {t.auth.signIn}
+        </Link>
+      </p>
     </div>
   );
 }

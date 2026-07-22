@@ -51,6 +51,12 @@ export const dictionaries = {
       intro:
         "Nach der Registrierung prüft unsere Kanzlei Ihren Zugang und schaltet ihn frei. Sie erhalten anschließend Zugriff auf Ihre Dokumente.",
     },
+    auth: {
+      noAccount: "Noch kein Konto?",
+      signUp: "Registrieren",
+      haveAccount: "Bereits ein Konto?",
+      signIn: "Anmelden",
+    },
     portal: {
       title: "Meine Dokumente",
       welcome:
@@ -163,6 +169,12 @@ export const dictionaries = {
     signUp: {
       intro:
         "After registering, our firm will review and activate your access. You'll then be able to access your documents.",
+    },
+    auth: {
+      noAccount: "Don't have an account?",
+      signUp: "Sign up",
+      haveAccount: "Already have an account?",
+      signIn: "Sign in",
     },
     portal: {
       title: "My documents",

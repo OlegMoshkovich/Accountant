@@ -22,13 +22,19 @@ body {
   box-shadow: none !important;
 }
 
-/* Hide Clerk "Secured by" branding */
-.cl-footer a[href*="clerk.com"],
-.cl-footer a[href*="clerk.com"] ~ *,
+/* Hide Clerk "Secured by" branding everywhere */
+.cl-footer,
+.cl-footerAction,
+.cl-footerPages,
 .cl-logoBox,
 .cl-userButtonPopoverFooter,
 .cl-internal-b3fm6y,
 [class*="cl-userButtonPopoverFooter"],
-.cl-userButtonPopoverCard > div:last-child:has(a[href*="clerk"]) {
+[class*="cl-footer"] a[href*="clerk"],
+a[href*="clerk.com"]:not([class*="social"]) {
   display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }

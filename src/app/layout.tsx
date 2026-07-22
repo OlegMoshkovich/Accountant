@@ -26,7 +26,10 @@ export default async function RootLayout({
         elements: {
           formButtonPrimary: "rounded-none bg-brand-700 hover:bg-brand-800",
           card: "rounded-none shadow-none",
-          footer: "[&_.cl-internal-b3fm6y]:hidden",
+          footer: "hidden",
+          footerAction: "hidden",
+          footerPages: "hidden",
+          logoBox: "hidden",
           userButtonPopoverCard: "mt-3 rounded-none shadow-none",
           userButtonPopoverFooter: "hidden",
         },

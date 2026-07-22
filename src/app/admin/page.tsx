@@ -70,7 +70,7 @@ export default async function AdminPage() {
         ) : (
           <div className="overflow-hidden border border-slate-200 bg-white ">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+              <thead className="bg-slate-50 text-xs tracking-wide text-slate-500">
                 <tr>
                   <th className="px-5 py-3 font-medium">{t.admin.colName}</th>
                   <th className="px-5 py-3 font-medium">{t.admin.colEmail}</th>
@@ -126,7 +126,7 @@ export default async function AdminPage() {
         ) : (
           <div className="overflow-hidden border border-slate-200 bg-white">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+              <thead className="bg-slate-50 text-xs tracking-wide text-slate-500">
                 <tr>
                   <th className="px-5 py-3 font-medium">{t.admin.colName}</th>
                   <th className="px-5 py-3 font-medium">{t.admin.colEmail}</th>
