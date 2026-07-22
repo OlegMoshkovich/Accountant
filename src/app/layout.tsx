@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: FIRM_NAME,
   description:
     "Wirtschaftsprüfung & Steuerberatung – secure client portal for tax returns and documents.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+    ],
+  },
 };
 
 export default async function RootLayout({

@@ -12,7 +12,7 @@ export default async function HomePage() {
     <div className="min-h-screen bg-brand-800">
       {/* Header */}
       <header className="bg-brand-800 text-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="text-lg font-bold tracking-tight">
             {FIRM_NAME}
           </Link>
@@ -38,15 +38,17 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="bg-brand-800 text-white">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 pb-20 pt-10 md:grid-cols-2 md:items-center">
-          <div>
+      {/* Section 1: Hero — centered horizontally & vertically */}
+      <section className="flex min-h-[calc(100vh-4.5rem)] items-center justify-center bg-brand-800 py-16 text-white">
+        <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 md:grid-cols-2 md:items-center">
+          <div className="text-center md:text-left">
             <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
               {t.home.heroTitle}
             </h1>
-            <p className="mt-5 max-w-lg text-brand-100">{t.home.heroBody}</p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <p className="mt-5 max-w-lg text-brand-100 md:max-w-none">
+              {t.home.heroBody}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start">
               <Link
                 href="/sign-up"
                 className="bg-white px-6 py-3 font-semibold text-brand-800 transition hover:bg-brand-50"
@@ -62,65 +64,72 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="relative aspect-[4/3] overflow-hidden md:aspect-auto md:min-h-[320px] md:self-stretch">
+          <div className="w-full">
             <Image
               src="/haus_konfi.jpg"
               alt={t.home.imageAlt}
-              fill
+              width={1200}
+              height={900}
               priority
-              className="object-cover"
+              className="h-auto w-full object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         </div>
       </section>
 
-      {/* Services */}
-      <section id="leistungen" className="bg-brand-800 text-white">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <h2 className="text-center text-2xl font-bold text-white">
+      {/* Section 2: Services + Contact */}
+      <section
+        id="leistungen"
+        className="flex min-h-[100svh] flex-col bg-brand-800 text-white md:min-h-0"
+      >
+        <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-8 md:block md:flex-none md:py-20">
+          <h2 className="text-2xl font-bold text-white md:text-3xl">
             {t.home.servicesTitle}
           </h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {t.home.services.map((s) => (
-              <div
-                key={s.title}
-                className="border border-brand-600 bg-brand-800 p-6 transition hover:border-brand-400"
-              >
-                <h3 className="text-lg font-semibold text-white">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-brand-100">
-                  {s.body}
-                </p>
-              </div>
-            ))}
+          <div className="flex flex-1 flex-col justify-center md:block md:flex-none">
+            <div className="grid gap-3 md:mt-10 md:grid-cols-3 md:gap-6">
+              {t.home.services.map((s) => (
+                <div
+                  key={s.title}
+                  className="border border-brand-600 bg-brand-800 p-4 transition hover:border-brand-400 md:p-7"
+                >
+                  <h3 className="text-base font-semibold text-white md:text-xl">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-snug text-brand-100 md:mt-3 md:text-base md:leading-relaxed">
+                    {s.body}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Contact / Footer */}
-      <footer id="kontakt" className="bg-brand-800 text-brand-100">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 sm:grid-cols-2">
-          <div>
-            <p className="text-lg font-bold text-white">{FIRM_NAME}</p>
-            <p className="mt-2 text-sm">{t.home.footerType}</p>
-            <p className="mt-4 text-sm leading-relaxed">
-              Hirsch-Gereuth-Str. 32
-              <br />
-              81369 München
-            </p>
+        <footer id="kontakt" className="text-brand-100">
+          <div className="mx-auto grid w-full max-w-6xl gap-4 px-6 py-6 sm:grid-cols-2 md:gap-6 md:py-12">
+            <div>
+              <p className="text-base font-bold text-white md:text-lg">{FIRM_NAME}</p>
+              <p className="mt-1 text-sm md:mt-2">{t.home.footerType}</p>
+              <p className="mt-2 text-sm leading-relaxed md:mt-4">
+                Hirsch-Gereuth-Str. 32
+                <br />
+                81369 München
+              </p>
+            </div>
+            <div className="text-sm sm:text-right">
+              <p>Tel.: 0 89 / 74 00 98 88</p>
+              <p>Fax: 0 89 / 74 00 98 89</p>
+              <p className="mt-1 md:mt-2">E-Mail: vom.hau@web.de</p>
+            </div>
           </div>
-          <div className="text-sm sm:text-right">
-            <p>Tel.: 0 89 / 74 00 98 88</p>
-            <p>Fax: 0 89 / 74 00 98 89</p>
-            <p className="mt-2">E-Mail: vom.hau@web.de</p>
+          <div className="border-t border-brand-600">
+            <div className="mx-auto w-full max-w-6xl px-6 py-3 text-xs text-brand-300 md:py-5">
+              © {new Date().getFullYear()} {FIRM_NAME}. {t.home.rightsReserved}
+            </div>
           </div>
-        </div>
-        <div className="border-t border-brand-600">
-          <div className="mx-auto max-w-6xl px-6 py-4 text-xs text-brand-300">
-            © {new Date().getFullYear()} {FIRM_NAME}. {t.home.rightsReserved}
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </section>
     </div>
   );
 }
