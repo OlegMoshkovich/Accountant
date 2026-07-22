@@ -14,3 +14,21 @@ html {
 body {
   @apply bg-slate-50 text-slate-900 antialiased;
 }
+
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Hide Clerk "Secured by" branding */
+.cl-footer a[href*="clerk.com"],
+.cl-footer a[href*="clerk.com"] ~ *,
+.cl-logoBox,
+.cl-userButtonPopoverFooter,
+.cl-internal-b3fm6y,
+[class*="cl-userButtonPopoverFooter"],
+.cl-userButtonPopoverCard > div:last-child:has(a[href*="clerk"]) {
+  display: none !important;
+}

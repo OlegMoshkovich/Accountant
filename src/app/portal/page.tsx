@@ -1,5 +1,6 @@
 import { getOrCreateProfile } from "@/lib/profile";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { getDict, fill, formatDate } from "@/lib/i18n";
 
 type DocRow = {
   id: string;
@@ -25,6 +26,7 @@ function formatBytes(bytes: number | null): string {
 
 export default async function PortalPage() {
   const profile = await getOrCreateProfile();
+  const { locale, t } = await getDict();
   const supabase = createAdminClient();
 
   const { data } = await supabase
@@ -38,33 +40,31 @@ export default async function PortalPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-brand-800">Meine Dokumente</h1>
+        <h1 className="text-2xl font-bold text-brand-800">{t.portal.title}</h1>
         <p className="mt-1 text-sm text-slate-500">
-          Willkommen{profile?.full_name ? `, ${profile.full_name}` : ""}. Hier
-          finden Sie alle von uns für Sie erstellten Unterlagen.
+          {fill(t.portal.welcome, {
+            name: profile?.full_name ? `, ${profile.full_name}` : "",
+          })}
         </p>
       </div>
 
       {docs.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center">
-          <p className="text-slate-600">
-            Es liegen noch keine Dokumente für Sie bereit.
-          </p>
-          <p className="mt-1 text-sm text-slate-400">
-            Sobald unsere Kanzlei Unterlagen für Sie hochlädt, erscheinen sie
-            hier.
-          </p>
+        <div className="border border-dashed border-slate-300 bg-white p-12 text-center">
+          <p className="text-slate-600">{t.portal.emptyTitle}</p>
+          <p className="mt-1 text-sm text-slate-400">{t.portal.emptyBody}</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-hidden border border-slate-200 bg-white ">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
               <tr>
-                <th className="px-5 py-3 font-medium">Dokument</th>
-                <th className="px-5 py-3 font-medium">Kategorie</th>
-                <th className="px-5 py-3 font-medium">Jahr</th>
-                <th className="px-5 py-3 font-medium">Datum</th>
-                <th className="px-5 py-3 text-right font-medium">Aktion</th>
+                <th className="px-5 py-3 font-medium">{t.portal.colDocument}</th>
+                <th className="px-5 py-3 font-medium">{t.portal.colCategory}</th>
+                <th className="px-5 py-3 font-medium">{t.portal.colYear}</th>
+                <th className="px-5 py-3 font-medium">{t.portal.colDate}</th>
+                <th className="px-5 py-3 text-right font-medium">
+                  {t.portal.colAction}
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -80,24 +80,24 @@ export default async function PortalPage() {
                     )}
                   </td>
                   <td className="px-5 py-4">
-                    <span className="inline-flex rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
-                      {d.category}
+                    <span className="inline-flex bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
+                      {t.categories[d.category] ?? d.category}
                     </span>
                   </td>
                   <td className="px-5 py-4 text-slate-600">{d.year ?? "—"}</td>
                   <td className="px-5 py-4 text-slate-600">
-                    {new Date(d.created_at).toLocaleDateString("de-DE")}
+                    {formatDate(d.created_at, locale)}
                   </td>
                   <td className="px-5 py-4 text-right">
                     <a
                       href={`/api/documents/${d.id}/download`}
-                      className="inline-flex items-center gap-1.5 rounded-md bg-brand-700 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-800"
+                      className="inline-flex items-center gap-1.5 bg-brand-700 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-800"
                     >
                       <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
                         <path d="M10 2a1 1 0 011 1v7.6l2.3-2.3a1 1 0 111.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 011.4-1.4L9 10.6V3a1 1 0 011-1z" />
                         <path d="M4 15a1 1 0 011 1v1h10v-1a1 1 0 112 0v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1a1 1 0 011-1z" />
                       </svg>
-                      Herunterladen
+                      {t.portal.download}
                     </a>
                   </td>
                 </tr>

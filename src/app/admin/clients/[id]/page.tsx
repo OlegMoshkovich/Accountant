@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { getDict, fill, formatDate } from "@/lib/i18n";
 import { UploadForm } from "@/components/UploadForm";
 import { DeleteDocButton } from "@/components/DeleteDocButton";
 
@@ -19,6 +20,7 @@ export default async function ClientDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { locale, t } = await getDict();
   const supabase = createAdminClient();
 
   const { data: client } = await supabase
@@ -44,7 +46,7 @@ export default async function ClientDetailPage({
           href="/admin"
           className="text-sm text-brand-600 hover:underline"
         >
-          ← Zurück zur Verwaltung
+          {t.clientDetail.back}
         </Link>
         <h1 className="mt-3 text-2xl font-bold text-brand-800">
           {client.full_name ?? client.email}
@@ -54,29 +56,31 @@ export default async function ClientDetailPage({
 
       <section>
         <h2 className="mb-4 text-lg font-semibold text-slate-800">
-          Neues Dokument bereitstellen
+          {t.clientDetail.provideNew}
         </h2>
-        <UploadForm ownerId={client.id} />
+        <UploadForm ownerId={client.id} labels={t.upload} categories={t.categories} />
       </section>
 
       <section>
         <h2 className="mb-4 text-lg font-semibold text-slate-800">
-          Bereitgestellte Dokumente ({documents.length})
+          {fill(t.clientDetail.provided, { n: documents.length })}
         </h2>
         {documents.length === 0 ? (
-          <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
-            Für diesen Mandanten wurden noch keine Dokumente hochgeladen.
+          <div className="border border-slate-200 bg-white p-6 text-sm text-slate-500">
+            {t.clientDetail.noneUploaded}
           </div>
         ) : (
-          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div className="overflow-hidden border border-slate-200 bg-white ">
             <table className="w-full text-left text-sm">
               <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <tr>
-                  <th className="px-5 py-3 font-medium">Dokument</th>
-                  <th className="px-5 py-3 font-medium">Kategorie</th>
-                  <th className="px-5 py-3 font-medium">Jahr</th>
-                  <th className="px-5 py-3 font-medium">Datum</th>
-                  <th className="px-5 py-3 text-right font-medium">Aktion</th>
+                  <th className="px-5 py-3 font-medium">{t.portal.colDocument}</th>
+                  <th className="px-5 py-3 font-medium">{t.portal.colCategory}</th>
+                  <th className="px-5 py-3 font-medium">{t.portal.colYear}</th>
+                  <th className="px-5 py-3 font-medium">{t.portal.colDate}</th>
+                  <th className="px-5 py-3 text-right font-medium">
+                    {t.portal.colAction}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -89,23 +93,23 @@ export default async function ClientDetailPage({
                       )}
                     </td>
                     <td className="px-5 py-4">
-                      <span className="inline-flex rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
-                        {d.category}
+                      <span className="inline-flex bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
+                        {t.categories[d.category] ?? d.category}
                       </span>
                     </td>
                     <td className="px-5 py-4 text-slate-600">{d.year ?? "—"}</td>
                     <td className="px-5 py-4 text-slate-600">
-                      {new Date(d.created_at).toLocaleDateString("de-DE")}
+                      {formatDate(d.created_at, locale)}
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex justify-end gap-2">
                         <a
                           href={`/api/documents/${d.id}/download`}
-                          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50"
+                          className="border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50"
                         >
-                          Ansehen
+                          {t.clientDetail.view}
                         </a>
-                        <DeleteDocButton documentId={d.id} />
+                        <DeleteDocButton documentId={d.id} labels={t.doc} />
                       </div>
                     </td>
                   </tr>

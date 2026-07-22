@@ -1,13 +1,19 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { FIRM_NAME } from "@/lib/constants";
+import type { Locale } from "@/lib/i18n/dictionaries";
+import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 
 export function PortalNav({
   isAdmin = false,
   active,
+  locale,
+  labels,
 }: {
   isAdmin?: boolean;
   active?: "portal" | "admin";
+  locale: Locale;
+  labels: { myDocuments: string; administration: string };
 }) {
   return (
     <header className="bg-brand-800 text-white">
@@ -20,17 +26,27 @@ export function PortalNav({
             href="/portal"
             className={active === "portal" ? "font-semibold text-white" : "text-brand-100 hover:text-white"}
           >
-            Meine Dokumente
+            {labels.myDocuments}
           </Link>
           {isAdmin && (
             <Link
               href="/admin"
               className={active === "admin" ? "font-semibold text-white" : "text-brand-100 hover:text-white"}
             >
-              Verwaltung
+              {labels.administration}
             </Link>
           )}
-          <UserButton afterSignOutUrl="/" />
+          <LocaleSwitcher locale={locale} tone="dark" />
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                userButtonPopoverCard: "mt-3 rounded-none shadow-none",
+                userButtonPopoverFooter: "hidden",
+                userButtonPopoverActionButton: "rounded-none",
+              },
+            }}
+          />
         </div>
       </div>
     </header>
