@@ -112,9 +112,16 @@ export default async function HomePage() {
               <p className="text-base font-bold text-white md:text-lg">{FIRM_NAME}</p>
               <p className="mt-1 text-sm md:mt-2">{t.home.footerType}</p>
               <p className="mt-2 text-sm leading-relaxed md:mt-4">
-                Hirsch-Gereuth-Str. 32
-                <br />
-                81369 München
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Hirsch-Gereuth-Str.+32%2C+81369+M%C3%BCnchen"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-white hover:underline"
+                >
+                  Hirsch-Gereuth-Str. 32
+                  <br />
+                  81369 München
+                </a>
               </p>
             </div>
             <div className="text-sm sm:text-right">

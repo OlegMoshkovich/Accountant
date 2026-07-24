@@ -6,8 +6,16 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: FIRM_NAME,
-  description:
-    "Wirtschaftsprüfung & Steuerberatung – secure client portal for tax returns and documents.",
+  description: "",
+  openGraph: {
+    title: FIRM_NAME,
+    description: "",
+    siteName: FIRM_NAME,
+  },
+  twitter: {
+    title: FIRM_NAME,
+    description: "",
+  },
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
