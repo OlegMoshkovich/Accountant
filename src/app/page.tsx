@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { FIRM_NAME } from "@/lib/constants";
 import { getDict } from "@/lib/i18n";
-import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { HomeHeader } from "@/components/HomeHeader";
 
 export default async function HomePage() {
   const { locale, t } = await getDict();
@@ -11,35 +10,10 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-brand-800">
       {/* Header */}
-      <header className="bg-brand-800 text-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
-          <Link
-            href="/"
-            className="min-w-0 text-base font-bold leading-tight tracking-tight sm:text-lg"
-          >
-            {FIRM_NAME}
-          </Link>
-          <nav className="flex shrink-0 items-center gap-3 text-sm sm:gap-4">
-            <LocaleSwitcher locale={locale} tone="dark" />
-            <SignedOut>
-              <Link
-                href="/sign-in"
-                className="bg-white px-4 py-2 font-medium text-brand-800 transition hover:bg-brand-50"
-              >
-                {t.nav.clientPortal}
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <Link
-                href="/portal"
-                className="bg-white px-4 py-2 font-medium text-brand-800 transition hover:bg-brand-50"
-              >
-                {t.nav.toPortal}
-              </Link>
-            </SignedIn>
-          </nav>
-        </div>
-      </header>
+      <HomeHeader
+        locale={locale}
+        labels={{ clientPortal: t.nav.clientPortal, toPortal: t.nav.toPortal }}
+      />
 
       {/* Section 1: Hero — centered horizontally & vertically */}
       <section className="flex min-h-[calc(100vh-4.5rem)] items-center justify-center bg-brand-800 py-16 text-white">
