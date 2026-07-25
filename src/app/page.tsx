@@ -12,11 +12,14 @@ export default async function HomePage() {
     <div className="min-h-screen bg-brand-800">
       {/* Header */}
       <header className="bg-brand-800 text-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-lg font-bold tracking-tight">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
+          <Link
+            href="/"
+            className="min-w-0 text-base font-bold leading-tight tracking-tight sm:text-lg"
+          >
             {FIRM_NAME}
           </Link>
-          <nav className="flex items-center gap-4 text-sm">
+          <nav className="flex shrink-0 items-center gap-3 text-sm sm:gap-4">
             <LocaleSwitcher locale={locale} tone="dark" />
             <SignedOut>
               <Link
